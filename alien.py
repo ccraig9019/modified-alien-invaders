@@ -11,7 +11,7 @@ class Alien(Sprite):
         self.settings = ai_game.settings
 
         #Load the alien image and set its rect attribute
-        self.image = pygame.image.load('images\Foozle_2DS0012_Void_FleetPack_1\Foozle_2DS0012_Void_EnemyFleet_1\Klaed\Base\PNGs\Klaed - Support ship - Base.png')
+        self.image = pygame.image.load('images\Foozle_2DS0012_Void_FleetPack_1\Foozle_2DS0012_Void_EnemyFleet_1\Klaed\Base\PNGs\Klaed - Support ship - Base.png').convert_alpha()
         self.rect = self.image.get_rect()
 
         #Start each new alien near the top left of the screen
