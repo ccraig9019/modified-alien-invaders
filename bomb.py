@@ -12,14 +12,15 @@ class Bomb(Sprite):
         self.color = self.settings.bomb_color
 
         #Create a bomb rect at (0, 0) and then set correct position
-        self.rect = pygame.Rect(0, 0, self.settings.bomb_width, self.settings.bomb_height)
-        self.rect.bottom = ai_game.ship.rect.bottom
+        self.rect = pygame.Rect(0, 0, self.settings.bomb_width,
+                                self.settings.bomb_height)
+        self.rect.midbottom = ai_game.ship.rect.midbottom
 
         #Store the bomb's position as a decimal value
         self.y = float(self.rect.y)
 
     def update(self):
-        """Move the bomb up the screen."""
+        """Move the bomb down the screen."""
         #Update the decimal position of the bomb.
         self.y += self.settings.bomb_speed
         #Update the rect position
