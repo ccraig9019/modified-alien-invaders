@@ -47,6 +47,7 @@ class AlienInvasion:
             if self.stats.game_active:
                 self.ship.update()
                 self._update_bullets()
+                self._update_bombs()
                 self._update_aliens()
                 
             self._update_screen()
@@ -139,19 +140,26 @@ class AlienInvasion:
         """Update position of bullets and bombs and get rid of old bullets and bombs"""
         #Update bullet positions.
         self.bullets.update()
-        self.bombs.update()
-
+        
         #Get rid of bullets that have disappeared    
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
+            
+        self._check_bullet_alien_collisions()
 
+    def _update_bombs(self):
+        """Update position of bombs and get rid of old bombs"""
+        #Update bomb positions.
+        self.bombs.update()
+        
+        #Get rid of bombs that have disappeared    
+        screen_rect = self.screen.get_rect()
         for bomb in self.bombs.copy():
-            if bomb.rect.top >= self.settings.screen_height:
+            if bomb.rect.top <= screen_rect.bottom:
                 self.bombs.remove(bomb)
 
-
-        self._check_bullet_alien_collisions()
+        self._check_bomb_alien_collisions()
 
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-alien collisions."""
@@ -167,6 +175,29 @@ class AlienInvasion:
         if not self.aliens:
             #Destroy existing bullets and create new fleet
             self.bullets.empty()
+            self.bombs.empty()
+            self._create_fleet()
+            self.settings.increase_speed()
+
+            #Increase level
+            self.stats.level += 1
+            self.sb.prep_level()
+
+    def _check_bomb_alien_collisions(self):
+        """Respond to bomb-alien collisions."""
+        #Remove any bombs and aliens that have collided.
+        collisions = pygame.sprite.groupcollide(self.bombs, self.aliens, True, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
+
+        if not self.aliens:
+            #Destroy existing bombs and create new fleet
+            self.bullets.empty()
+            self.bombs.empty()
             self._create_fleet()
             self.settings.increase_speed()
 
@@ -233,6 +264,8 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        for bomb in self.bombs.sprites():
+            bomb.draw_bomb()
         self.aliens.draw(self.screen)
 
         #Draw the score information

@@ -18,8 +18,8 @@ class Settings:
         self.bullets_allowed = 3
 
         #Bomb settings
-        self.bomb_width = 5
-        self.bomb_height = 5
+        self.bomb_width = 15
+        self.bomb_height = 15
         self.bomb_color = (200, 200, 200)
         self.bombs_allowed = 3
 

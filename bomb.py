@@ -2,7 +2,7 @@ import pygame
 from pygame.sprite import Sprite
 
 class Bomb(Sprite):
-    """A class to manage bombs dropped from the ship"""
+    """A class to manage bombs fired from the ship"""
 
     def __init__(self, ai_game):
         """Create a bomb object at the ship's current position."""
@@ -12,8 +12,7 @@ class Bomb(Sprite):
         self.color = self.settings.bomb_color
 
         #Create a bomb rect at (0, 0) and then set correct position
-        self.rect = pygame.Rect(0, 0, self.settings.bomb_width,
-                                self.settings.bomb_height)
+        self.rect = pygame.Rect(0, 0, self.settings.bomb_width, self.settings.bomb_height)
         self.rect.midbottom = ai_game.ship.rect.midbottom
 
         #Store the bomb's position as a decimal value
