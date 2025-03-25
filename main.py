@@ -129,15 +129,17 @@ class AlienInvasion:
         if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
+            print(self.bullets)
 
     def _drop_bomb(self):
         """Create a new bomb and add it to the bombs group"""
         if len(self.bombs) < self.settings.bombs_allowed:
             new_bomb = Bomb(self)
             self.bombs.add(new_bomb)
+            print(self.bombs)
 
     def _update_bullets(self):
-        """Update position of bullets and bombs and get rid of old bullets and bombs"""
+        """Update position of bullets and get rid of old bullets"""
         #Update bullet positions.
         self.bullets.update()
         
@@ -148,7 +150,7 @@ class AlienInvasion:
             
         self._check_bullet_alien_collisions()
 
-    def _update_bombs(self):
+    def _update_bombs(self): 
         """Update position of bombs and get rid of old bombs"""
         #Update bomb positions.
         self.bombs.update()
@@ -156,7 +158,7 @@ class AlienInvasion:
         #Get rid of bombs that have disappeared    
         screen_rect = self.screen.get_rect()
         for bomb in self.bombs.copy():
-            if bomb.rect.top <= screen_rect.bottom:
+            if bomb.rect.top >= screen_rect.bottom:
                 self.bombs.remove(bomb)
 
         self._check_bomb_alien_collisions()
