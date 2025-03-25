@@ -18,10 +18,13 @@ class Settings:
         self.bullets_allowed = 3
 
         #Bomb settings
-        self.bomb_width = 15
-        self.bomb_height = 15
-        self.bomb_color = (230, 0, 0)
-        self.bombs_allowed = 3
+        self.bomb_width = 20
+        self.bomb_height = 60
+        self.bomb_color = (200, 200, 200)
+        self.bombs_allowed = 1
+        self.shrapnel_color = (200, 200, 200)
+        self.shrapnel_width = 15
+        self.shrapnel_height = 3
 
         #Alien settings
         self.fleet_drop_speed = 10
@@ -38,7 +41,7 @@ class Settings:
         """Initialise settings that change throughout the game"""
         self.ship_speed = 1.5
         self.bullet_speed = 1
-        self.bomb_speed = 1
+        self.bomb_speed = 0.3
         self.alien_speed = 0.5
 
         #fleet direction of 1 represents right; -1 represents left

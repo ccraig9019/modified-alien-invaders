@@ -13,6 +13,8 @@ class Alien(Sprite):
         #Load the alien image and set its rect attribute
         self.image = pygame.image.load('images\Klaed - Battlecruiser - Base(copy).png').convert_alpha()
         self.rect = self.image.get_rect()
+        pygame.draw.rect(self.screen, (0, 0, 255), self.rect, 2)
+        
 
         #Start each new alien near the top left of the screen
         self.rect.x = self.rect.width

@@ -10,7 +10,7 @@ from ship import Ship
 from bullet import Bullet
 from alien import Alien
 from bomb import Bomb
-
+from shrapnel import Shrapnel
 
 class AlienInvasion:
     """Overall class to manage game assets and behaviour."""
@@ -33,6 +33,7 @@ class AlienInvasion:
         self.bullets = pygame.sprite.Group()
         self.bombs = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.shrapnel = pygame.sprite.Group()
 
         self._create_fleet()
 
@@ -193,9 +194,13 @@ class AlienInvasion:
         if collisions:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
+            for bomb in collisions.keys():
+                shrapnel = Shrapnel(self, bomb)
+                self.shrapnel.add(shrapnel)
             self.sb.prep_score()
             self.sb.check_high_score()
-
+            
+            
         if not self.aliens:
             #Destroy existing bombs and create new fleet
             self.bullets.empty()
@@ -269,7 +274,10 @@ class AlienInvasion:
         for bomb in self.bombs.sprites():
             bomb.draw_bomb()
         self.aliens.draw(self.screen)
-
+        #Draw a hitbox around each alien - for debugging
+        #for alien in self.aliens.sprites():
+           #pygame.draw.rect(self.screen, (0, 0, 255), alien.rect, 2)
+        self.shrapnel.draw(self.screen)
         #Draw the score information
         self.sb.show_score()
 
@@ -289,6 +297,7 @@ class AlienInvasion:
             #Get rid of any remaining aliens and bullets
             self.aliens.empty()
             self.bullets.empty()
+            self.bombs.empty()
 
             #Create a new fleet and centre the ship
             self._create_fleet()
