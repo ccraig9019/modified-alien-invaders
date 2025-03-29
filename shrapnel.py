@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 class Shrapnel(Sprite):
     """A class to manage shrapnel released from a bomb"""
 
-    def __init__(self, ai_game, bomb):
+    def __init__(self, ai_game, bomb, direction):
         """Create a shrapnel object at the bomb's current position."""
         super().__init__()
         self.screen = ai_game.screen
@@ -20,10 +20,13 @@ class Shrapnel(Sprite):
         #Store the bullet's position as a decimal value
         self.x = float(self.rect.x)
 
+        #Shrapnel direction
+        self.direction = direction
+
     def update(self):
         """Move the shrapnel across the screen."""
         #Update the decimal position of the shrapnel.
-        self.x += self.settings.shrapnel_speed
+        self.x += self.settings.shrapnel_speed * self.direction
         #Update the rect position
         self.rect.x = self.x
 

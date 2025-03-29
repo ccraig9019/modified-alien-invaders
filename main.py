@@ -203,8 +203,9 @@ class AlienInvasion:
             for aliens in collisions.values():
                 self.stats.score += self.settings.alien_points * len(aliens)
             for bomb in collisions.keys():
-                shrapnel = Shrapnel(self, bomb)
-                self.shrapnel.add(shrapnel)
+                shrapnel1 = Shrapnel(self, bomb, 1)
+                shrapnel2 = Shrapnel(self, bomb, -1)
+                self.shrapnel.add(shrapnel1, shrapnel2)
             self.sb.prep_score()
             self.sb.check_high_score()
             
