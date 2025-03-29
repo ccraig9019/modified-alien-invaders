@@ -50,6 +50,7 @@ class AlienInvasion:
                 self._update_bullets()
                 self._update_bombs()
                 self._update_aliens()
+                self._update_shrapnel()
                 
             self._update_screen()
                 
@@ -164,6 +165,13 @@ class AlienInvasion:
 
         self._check_bomb_alien_collisions()
 
+    def _update_shrapnel(self):
+        """Update position of shrapnel"""
+        #Update shrapnel position
+        self.shrapnel.update()
+
+        self._check_shrapnel_alien_collisions()
+
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-alien collisions."""
         #Remove any bullets and aliens that have collided.
@@ -211,6 +219,17 @@ class AlienInvasion:
             #Increase level
             self.stats.level += 1
             self.sb.prep_level()
+
+    def _check_shrapnel_alien_collisions(self):
+        """Respond to shrapnel-alien collisions"""
+        #Remove any shrapnel and aliens which collide
+        collisions = pygame.sprite.groupcollide(self.shrapnel, self.aliens, True, True)
+
+        if collisions:
+            for aliens in collisions.values():
+                self.stats.score += self.settings.alien_points * len(aliens)
+            self.sb.prep_score()
+            self.sb.check_high_score()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge then update the positions of all aliens in the fleet"""

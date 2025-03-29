@@ -42,6 +42,7 @@ class Settings:
         self.ship_speed = 1.5
         self.bullet_speed = 1
         self.bomb_speed = 0.3
+        self.shrapnel_speed = 1
         self.alien_speed = 0.5
 
         #fleet direction of 1 represents right; -1 represents left

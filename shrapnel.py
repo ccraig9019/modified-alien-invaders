@@ -11,10 +11,11 @@ class Shrapnel(Sprite):
         self.settings = ai_game.settings
         self.color = self.settings.shrapnel_color
 
-        #Create a bullet rect at (0, 0) and then set correct position
-        self.rect = pygame.Rect(0, 0, self.settings.shrapnel_width, self.settings.shrapnel_height)
-        
-        self.rect.center = bomb.rect.center
+        self.image = pygame.Surface((self.settings.shrapnel_width, self.settings.shrapnel_height))
+        self.image.fill(self.color)
+
+        self.rect = self.image.get_rect()
+        self.rect.center = bomb.rect.midbottom
 
         #Store the bullet's position as a decimal value
         self.x = float(self.rect.x)
@@ -25,6 +26,11 @@ class Shrapnel(Sprite):
         self.x += self.settings.shrapnel_speed
         #Update the rect position
         self.rect.x = self.x
+
+        #Remove shrapnel that reaches the edge of the screen
+        screen_rect = self.screen.get_rect()
+        if not screen_rect.colliderect(self.rect):
+            self.kill()
 
     def draw_shrapnel(self):
         """Draw the shrapnel to the screen."""
