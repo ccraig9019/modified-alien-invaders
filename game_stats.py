@@ -1,3 +1,6 @@
+import os
+import sys
+
 class GameStats:
     """Track statistics for Alien Invasion"""
 
@@ -10,7 +13,11 @@ class GameStats:
         self.game_active = False
 
         #High score should never be reset
-        with open('high_score.txt') as f:
+        if getattr(sys, 'frozen', False):
+            high_score_path = os.path.join(sys._MEIPASS, 'high_score.txt')
+        else:
+            high_score_path = 'high_score.txt'
+        with open(high_score_path) as f:
             lines = f.readline() 
         self.high_score = int(lines)
 

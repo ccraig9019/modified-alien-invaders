@@ -1,4 +1,5 @@
-import asyncio
+#import asyncio
+import os
 import sys
 from time import sleep
 import pygame
@@ -24,7 +25,8 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
-        self.bg_image = pygame.image.load('images/Space_Stars2.png').convert_alpha()
+        bg_image_path = os.path.join(sys._MEIPASS, 'images', 'Space_Stars2.png') if getattr(sys, 'frozen', False) else 'images/Space_Stars2.png'
+        self.bg_image = pygame.image.load(bg_image_path).convert_alpha()
 
         #Create an instance to store game statistics and create a scoreboard
         self.stats = GameStats(self)
@@ -349,7 +351,11 @@ class AlienInvasion:
                 break
 
     def _write_high_score(self):
-        with open('high_score.txt', 'w') as f:
+        if getattr(sys, 'frozen', False):
+            high_score_path = os.path.join(sys._MEIPASS, 'high_score.txt')
+        else:
+            high_score_path = 'high_score.txt'
+        with open(high_score_path, 'w') as f:
             f.write(str(self.stats.high_score))
 
 

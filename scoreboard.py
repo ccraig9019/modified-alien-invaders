@@ -1,3 +1,5 @@
+import os
+import sys
 import pygame.font
 from pygame.sprite import Group
 
@@ -16,7 +18,11 @@ class Scoreboard:
 
         #Font settings for scoring information
         self.text_color = (140, 140, 140)
-        self.font = pygame.font.Font("Seven Segment.ttf", 48)
+        if getattr(sys, 'frozen', False):
+            font_path = os.path.join(sys._MEIPASS, 'font/Seven Segment.ttf')
+        else:
+            font_path = 'font/Seven Segment.ttf'
+        self.font = pygame.font.Font(font_path, 48)
 
         #Prepare the initial score images
         self.prep_score()
