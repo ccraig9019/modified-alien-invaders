@@ -1,0 +1,8 @@
+Shoot the aliens! Save the world!
+
+Arrow keys - move
+Space - fire laser
+B - drop bomb
+
+P - play game
+Q - quite game

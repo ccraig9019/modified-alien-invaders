@@ -24,6 +24,7 @@ class AlienInvasion:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
+        self.bg_image = pygame.image.load('images/Space_Stars2.png').convert_alpha()
 
         #Create an instance to store game statistics and create a scoreboard
         self.stats = GameStats(self)
@@ -287,7 +288,15 @@ class AlienInvasion:
 
     def _update_screen(self):
         """Update images on the screen and flip to the new screen."""
-        self.screen.fill(self.settings.bg_color)
+        self.screen.fill((0, 0, 0))
+        
+        bg_width, bg_height = self.bg_image.get_size()
+
+        for y in range(0, self.settings.screen_height, bg_height):
+            for x in range(0, self.settings.screen_width, bg_width):
+                self.screen.blit(self.bg_image, (x, y))
+
+        
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
@@ -344,13 +353,12 @@ class AlienInvasion:
             f.write(str(self.stats.high_score))
 
 
-async def main():
-    if __name__ == '__main__':
-        #Make a game instance and run the game.
-        ai = AlienInvasion()
-        ai.run_game()
 
-asyncio.run(main())
+if __name__ == '__main__':
+    #Make a game instance and run the game.
+    ai = AlienInvasion()
+    ai.run_game()
+
 
 
 #asyncio version of main game loop

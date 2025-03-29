@@ -6,7 +6,8 @@ class Settings:
         #Screen settings
         self.screen_width = 1000
         self.screen_height = 600
-        self.bg_color = (10, 10, 10)
+        self.bg_color = (30, 0, 0)
+        self.bg_image = 'images/Space_Stars2.png'
         
         #Ship settings
         self.ship_limit = 3
